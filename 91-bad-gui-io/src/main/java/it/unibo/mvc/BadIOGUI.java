@@ -14,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -41,13 +39,19 @@ public class BadIOGUI {
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+        final JPanel boxPanel = new JPanel();
+        boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS));
+        canvas.add(boxPanel);
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        boxPanel.add(write);
+        final JButton read = new JButton("Read");
+        boxPanel.add(read);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * Handlers
          */
+
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -66,6 +70,15 @@ public class BadIOGUI {
                 }
             }
         });
+
+        read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Read pressed");
+            }
+            
+        });
     }
 
     private void display() {
@@ -81,6 +94,7 @@ public class BadIOGUI {
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
         frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning
