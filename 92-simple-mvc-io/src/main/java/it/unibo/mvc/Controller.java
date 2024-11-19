@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
  * Application controller. Performs the I/O.
  */
 public class Controller {
-    private static final String DEFAULT_FILE = System.getProperty("user.home") + File.pathSeparator + "output.txt";
+    private static final String DEFAULT_FILE = System.getProperty("user.home") + File.separator + "output.txt";
     private File currentfile;
 
     public Controller(final String file) {
@@ -16,7 +16,9 @@ public class Controller {
     }
 
     public Controller(){
+
         this(DEFAULT_FILE);
+        System.out.println(DEFAULT_FILE);
     }
 
     /*
