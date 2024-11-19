@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Random;
 
 /**
@@ -36,6 +37,15 @@ public class BadIOGUI {
     /**
      * Creates a new BadIOGUI.
      */
+    /*
+     * A method that is used to make appear a @JoptionPane to show a error message due to a IOexception
+     */
+    
+    private void errorMessage(final IOException e, final JFrame frame) {
+        JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); //NOPMD it was used intenjtionally by the creator of this repository
+    }
+
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
@@ -65,19 +75,21 @@ public class BadIOGUI {
                 try (PrintStream ps = new PrintStream(PATH, StandardCharsets.UTF_8)) {
                     ps.print(randomGenerator.nextInt());
                 } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
-                    e1.printStackTrace(); // NOPMD: allowed as this is just an exercise
+                    errorMessage(e1, frame); 
                 }
             }
         });
 
         read.addActionListener(new ActionListener() {
-
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Read pressed");
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    final var lines = java.nio.file.Files.readAllLines(Path.of(PATH), StandardCharsets.UTF_8);
+                    System.out.println(lines.get(0)); // NOPMD: allowed as this is just an exercise
+                } catch (final IOException e2) {
+                    errorMessage(e2, frame); 
+                }
             }
-            
         });
     }
 
