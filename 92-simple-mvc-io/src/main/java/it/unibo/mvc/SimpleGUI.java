@@ -15,14 +15,15 @@ import javax.swing.JTextArea;
  * A very simple program using a graphical interface.
  * 
  */
-public final class SimpleGUI {
+public class SimpleGUI {
 
     private static final int PROPORTION = 5; 
     private final JFrame frame = new JFrame();
     private final Controller controller;
+    private final JPanel canvas;
     protected SimpleGUI(){
         controller = new Controller();
-        JPanel canvas = new JPanel();
+        canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         JTextArea textArea = new JTextArea();
         canvas.add(textArea, BorderLayout.CENTER);
@@ -40,11 +41,14 @@ public final class SimpleGUI {
             
         });
     }
+    protected JPanel getCanvas(){
+        return canvas;
+    }
     protected Controller getController(){
-        return new Controller(controller.getFilePath());
+        return controller;
     }
     
-    private void display(){
+    final protected void display(){
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
