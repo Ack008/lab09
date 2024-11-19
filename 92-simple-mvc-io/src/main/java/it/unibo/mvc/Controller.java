@@ -18,7 +18,6 @@ public class Controller {
     public Controller(){
 
         this(DEFAULT_FILE);
-        System.out.println(DEFAULT_FILE);
     }
 
     /*

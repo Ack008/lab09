@@ -19,7 +19,9 @@ public final class SimpleGUI {
 
     private static final int PROPORTION = 5; 
     private final JFrame frame = new JFrame();
-    private SimpleGUI(){
+    private final Controller controller;
+    protected SimpleGUI(){
+        controller = new Controller();
         JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         JTextArea textArea = new JTextArea();
@@ -33,13 +35,15 @@ public final class SimpleGUI {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                Controller controller = new Controller();
                 controller.writeOnFile(textArea.getText());
             }
             
         });
     }
-
+    protected Controller getController(){
+        return new Controller(controller.getFilePath());
+    }
+    
     private void display(){
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
