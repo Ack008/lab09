@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Random;
+
+import static java.nio.file.Files.readAllLines;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -24,7 +27,7 @@ import java.util.Random;
  * such is just to be used to learn the basics, not as a template for your
  * applications.
  */
-public class BadIOGUI {
+public final class BadIOGUI {
 
     private static final String TITLE = "A very simple GUI application";
     private static final String PATH = System.getProperty("user.home")
@@ -40,13 +43,12 @@ public class BadIOGUI {
     /*
      * A method that is used to make appear a @JoptionPane to show a error message due to a IOexception
      */
-    
     private void errorMessage(final IOException e, final JFrame frame) {
         JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace(); //NOPMD it was used intenjtionally by the creator of this repository
     }
 
-    public BadIOGUI() {
+    private BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         final JPanel boxPanel = new JPanel();
@@ -84,7 +86,7 @@ public class BadIOGUI {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 try {
-                    final var lines = java.nio.file.Files.readAllLines(Path.of(PATH), StandardCharsets.UTF_8);
+                    final List<String> lines = readAllLines(Path.of(PATH), StandardCharsets.UTF_8);
                     System.out.println(lines.get(0)); // NOPMD: allowed as this is just an exercise
                 } catch (final IOException e2) {
                     errorMessage(e2, frame); 
